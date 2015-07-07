@@ -1,0 +1,972 @@
+<!DOCTYPE html><html class="no-js" lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><title>Compiling on OS X - Rigs of Rods</title><link href="/stylesheets/styles.css" rel="stylesheet" /><link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CUbuntu+Mono:400%7CUbuntu:300,300italic,300bold,400,400italic,400bold,600,600italic,600bold" rel="stylesheet" /><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.5/jquery.smooth-scroll.min.js"></script><script>$(document).foundation();</script><script>$(document).ready(function() {
+    $('a').smoothScroll();
+          $('').click(function(event) {
+            event.preventDefault();
+            var link = this;
+            $.smoothScroll({
+              scrollTarget: link.hash
+            });
+          });
+        });</script></head><body><div class="row contain-to-grid main-header"><div class="small-9 small-centered columns"><div class="fixed main-header"><nav class="top-bar" role="navigation"><ul class="title-area"><li class="name"><h1><a href="/en/">Rigs of Rods</a></h1></li></ul><section class="top-bar-section"><ul class="left"><li><a href="/en/"><span class='fa fa-home'></span>  <span>Home</span></a></li><li><a href="/en/download/"><span class='fa fa-download'></span>  <span>Download</span></a></li><li><a href="/en/repository/"><span class='fa fa-plus'></span>  <span>Repository</span></a></li><li><a href="/en/forum/"><span class='fa fa-comments'></span>  <span>Forum</span></a></li><li><a href="/en/blog/"><span class='fa fa-pencil'></span>  <span>Blog</span></a></li><li><a href="/en/docs/"><span class='fa fa-lightbulb-o'></span>  <span>Docs</span></a></li><li><a href="/en/races/"><span class='fa fa-users'></span>  <span>Multiplayer</span></a></li></ul></section></nav></div></div></div></body></html><div class="row main-start"><div class="small-12 columns"><div id="header"><h1>Compiling on OS X</h1><div class="details"></div></div><div id="content"><div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Rigs of Rods is a complex beast. It has a 3D engine, physics simulator, water and sky plug-ins, input device system, networking, localization plug-in module&#8230;&#8203; and so on.</p>
+</div>
+<div class="paragraph">
+<p>Some of these components are required to build RoR; some are optional.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Rigs of Rods is built in 4 steps</dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download source code for RoR and supporting libraries (dependencies)</p>
+</li>
+<li>
+<p>Compile libraries</p>
+</li>
+<li>
+<p>Using CMake, create a Makefile for RoR</p>
+</li>
+<li>
+<p>Use make to build the RoR app (xcodebuild on Mac)</p>
+</li>
+</ol>
+</div>
+</dd>
+</dl>
+</div>
+<!-- toc disabled -->
+</div>
+</div>
+<div class="sect1">
+<h2 id="required_tools"><a class="anchor" href="#required_tools"></a>1. Required tools</h2>
+<div class="sectionbody">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Mac OS X</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Version: 10.9 or 10.10</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Xcode</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Version: 5.1 (5B130a)</p>
+</li>
+<li>
+<p>Notes: Requires Xcode Command Line Tools to be installed.</p>
+</li>
+<li>
+<p>Source: Mac App Store</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Python</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Version: 2.7.5 (OS X built-in)</p>
+</li>
+<li>
+<p>Notes: Required to run RoR build scripts.</p>
+</li>
+<li>
+<p>Source: Built into OS X 10.9</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">CMake</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Version: 2.8.12.2 (installed via homebrew)</p>
+</li>
+<li>
+<p>Notes: see below</p>
+</li>
+<li>
+<p>Source: see below</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="sect2">
+<h3 id="installing_cmake"><a class="anchor" href="#installing_cmake"></a>1.1. Installing CMake</h3>
+<div class="paragraph">
+<p>Install Homebrew. <a href="http://brew.sh" class="bare">http://brew.sh</a></p>
+</div>
+<div class="paragraph">
+<p>Open a terminal window and run <code>brew install cmake</code> to install CMake into a Homebrew bottle. If you already have an older version of CMake installed, Homebrew should warn you.</p>
+</div>
+<div class="paragraph">
+<p>Run <code>cmake --version</code> and verify it&#8217;s at least 2.8.12.2 (used in this guide). If it&#8217;s showing up as a different version, you may need to unlink and reinstall CMake (see above) or you have a conflicting version installed elsewhere (MacPorts, perhaps?)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="libraries_dependencies"><a class="anchor" href="#libraries_dependencies"></a>2. Libraries (dependencies)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Rigs of Rods needs these libraries to compile.
+pyBuilder.py builds the libraries in the following order.
+Libraries were selected to mirror those in RoR-Dependencies-v26 for Windows.
+Certain library versions from the v26 package didn&#8217;t work on OS X 10.9, so these have been annotated below.</p>
+</div>
+<div class="sect2">
+<h3 id="build_process"><a class="anchor" href="#build_process"></a>2.1. Build process</h3>
+<div class="paragraph">
+<p>First, build the simpler libraries.</p>
+</div>
+<div class="sect3">
+<h4 id="wxwidgets"><a class="anchor" href="#wxwidgets"></a>2.1.1. WxWidgets</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>version: 3.0.0</p>
+</li>
+<li>
+<p>notes: WxWidgets 3.0 required to build for OS X 10.9; Carbon is deprecated, which WxWidgets 2.9 used. (As of Mar 2014, RoR for Windows 0.4.0.7 uses WxWidgets 2.9.1.)</p>
+</li>
+<li>
+<p>source: <a href="https://sourceforge.net/projects/wxwindows/files/3.0.0/wxWidgets-3.0.0.tar.bz2" class="bare">https://sourceforge.net/projects/wxwindows/files/3.0.0/wxWidgets-3.0.0.tar.bz2</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Build steps:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">wget https://sourceforge.net/projects/wxwindows/files/3.0.0/wxWidgets-3.0.0.tar.bz2
+tar -xvf wxWidgets-3.0.0.tar.bz2; cd wxWidgets-3.0.0
+mkdir wxwidgets-release; cd wxwidgets-release
+../configure; make
+copytree wxwidgets-release/lib
+copytree wxwidgets-release/
+copytree include/wx</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="mofilereader"><a class="anchor" href="#mofilereader"></a>2.1.2. MoFileReader</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Reads .mo files; these are language localizations.</p>
+</li>
+<li>
+<p>Version: 0.1.3: released 2012-05-20</p>
+</li>
+<li>
+<p>Sourcefile: git; see "build process" below</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Build steps</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">git clone https://code.google.com/p/mofilereader/
+cd mofilereader/build
+cmake .
+make</code></pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Build products</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>static lib: tmp/mofilereader/lib/libmoFileReader.static.a</p>
+</li>
+<li>
+<p>executable: tmp/mofilereader/bin/moReader</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="socketw"><a class="anchor" href="#socketw"></a>2.1.3. SocketW</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Streaming socket C++ library. (Networking and inter-process communication)</p>
+</li>
+<li>
+<p>URL: <a href="http://www.digitalfanatics.org/cal/socketw/" class="bare">http://www.digitalfanatics.org/cal/socketw/</a></p>
+</li>
+<li>
+<p>Version: r031026 (2003-10-26)</p>
+</li>
+<li>
+<p>Last checked: 2014-03-24</p>
+</li>
+<li>
+<p>Source: <a href="http://www.digitalfanatics.org/cal/socketw/files/SocketW031026.tar.gz" class="bare">http://www.digitalfanatics.org/cal/socketw/files/SocketW031026.tar.gz</a></p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Build steps</dt>
+<dd>
+<p>From RoR dependencies src/ directory</p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>tar -xvf SocketW031026.tar.gz &amp;&amp; mv SocketW031026 SocketW
+cd SocketW/src
+patch &lt; ../../files/SocketW.diff
+make</pre>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Build products</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Headers: SocketW.h, sw_base.h, sw_config.h, sw_inet.h, sw_internal.h, sw_ssl.h, sw_unix.h</p>
+</li>
+<li>
+<p>Static lib: libSocketW.a</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="angelscript"><a class="anchor" href="#angelscript"></a>2.1.4. AngelScript</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Provides in-game scripting.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="openal"><a class="anchor" href="#openal"></a>2.1.5. OpenAL</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Audio</p>
+</li>
+<li>
+<p>Version: 1.15.1 (win32 version is 1.13)</p>
+</li>
+<li>
+<p>Source code: <a href="http://kcat.strangesoft.net/openal-releases/openal-soft-1.15.1.tar.bz2" class="bare">http://kcat.strangesoft.net/openal-releases/openal-soft-1.15.1.tar.bz2</a></p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="openal_build_steps"><a class="anchor" href="#openal_build_steps"></a>OpenAL build steps</h5>
+<div class="paragraph">
+<p>May need pthreads to be built first. This error occurs during make:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>clang: warning: argument unused during compilation: '-pthread'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>cd to tmp directory, then:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">wget http://kcat.strangesoft.net/openal-releases/openal-soft-1.15.1.tar.bz2
+tar -xvf openal-soft-1.15.1.tar.bz2
+cd openal-soft-1.15.1/build
+cmake ..
+make</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ois"><a class="anchor" href="#ois"></a>2.1.6. OIS</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Object-oriented Input System. Handles input from keyboards, mice, joystick, etc.</p>
+</li>
+<li>
+<p>URL: <a href="http://sourceforge.net/projects/wgois/" class="bare">http://sourceforge.net/projects/wgois/</a></p>
+</li>
+<li>
+<p>Version: 1.3</p>
+</li>
+<li>
+<p>Last update: 2013-04-29</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="pthreads"><a class="anchor" href="#pthreads"></a>2.1.7. PThreads</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: POSIX Threads</p>
+</li>
+<li>
+<p>Notes: Built into OS X.</p>
+</li>
+<li>
+<p>Header path: <code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/pthread.h</code></p>
+</li>
+<li>
+<p>Library path: <code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libpthread.dylib</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="curl"><a class="anchor" href="#curl"></a>2.1.8. curl</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: "curl groks URLs"</p>
+</li>
+<li>
+<p>URL: <a href="http://curl.haxx.se" class="bare">http://curl.haxx.se</a></p>
+</li>
+<li>
+<p>Notes: Built into OS X. (.dylib only)</p>
+</li>
+<li>
+<p>Header path: <code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/include/curl/curl.h</code></p>
+</li>
+<li>
+<p>Library path: <code>/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libcurl.dylib</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Read "Important note for curl users on OS X Mavericks 10.9, here:
+<a href="http://curl.haxx.se/mail/archive-2013-10/0036.html" class="bare">http://curl.haxx.se/mail/archive-2013-10/0036.html</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="boost"><a class="anchor" href="#boost"></a>2.1.9. Boost</h4>
+<div class="paragraph">
+<p>Description: Cross-platform C++ framework, used for RoR-specific code</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="ogre"><a class="anchor" href="#ogre"></a>2.1.10. Ogre</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: 3D engine</p>
+</li>
+<li>
+<p>Version: 1.8.1</p>
+</li>
+<li>
+<p>Notes: 1.8.1 is the latest stable release of the Ogre v1.8 tree. Ogre changes with each .x release. Currently RoR builds against the Ogre 1.8 tree.</p>
+</li>
+<li>
+<p>Source: <a href="http://downloads.sourceforge.net/project/ogre/ogre/1.8/1.8.1/ogre_src_v1-8-1.tar.bz2" class="bare">http://downloads.sourceforge.net/project/ogre/ogre/1.8/1.8.1/ogre_src_v1-8-1.tar.bz2</a></p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Sources file on mercurial (optional)</dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>cd ~/Developer</code> (or wherever you&#8217;re building the RoR project)</p>
+</li>
+<li>
+<p><code>hg clone <a href="http://bitbucket.org/sinbad/ogre/" class="bare">http://bitbucket.org/sinbad/ogre/</a> -u -v1-8</code></p>
+</li>
+<li>
+<p>Mercurial downloads 265MB of data to ogre directory.</p>
+</li>
+</ol>
+</div>
+</dd>
+<dt class="hdlist1">Build steps</dt>
+<dd>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>mkdir Ogre/build &amp;&amp; cd Ogre/build</code></p>
+</li>
+<li>
+<p>(incomplete)</p>
+</li>
+</ol>
+</div>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Building Ogre with <code>RoRBuilder.py</code></p>
+</div>
+<div class="paragraph">
+<p>Ogre is the trickiest library to get working. The codebase currently uses Ogre version 1.8.1 (2014-05). This is an explanation of how RoRBuilder.py does it.</p>
+</div>
+<div class="sect4">
+<h5 id="step_1_patch_ogre"><a class="anchor" href="#step_1_patch_ogre"></a>Step 1: Patch Ogre</h5>
+<div class="paragraph">
+<p>Patch description for Mavericks: <a href="https://github.com/osrf/homebrew-simulation/issues/2" class="bare">https://github.com/osrf/homebrew-simulation/issues/2</a>
+Patch itself (for Ogre 1.7.4): <a href="https://gist.github.com/hgaiser/7346167" class="bare">https://gist.github.com/hgaiser/7346167</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Build CppUnit: <a href="https://code.google.com/p/tonatiuh/wiki/InstallingCppUnitForMac" class="bare">https://code.google.com/p/tonatiuh/wiki/InstallingCppUnitForMac</a></p>
+</li>
+<li>
+<p>Doxygen</p>
+</li>
+<li>
+<p>GLSLOptimizer</p>
+</li>
+<li>
+<p>HLSL2GLSL</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="step_2_configure_ogre_cmakelists_txt"><a class="anchor" href="#step_2_configure_ogre_cmakelists_txt"></a>Step 2: Configure Ogre CMakeLists.txt</h5>
+<div class="paragraph">
+<p>Ogre 1.8.1</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Change OgreOSXCocoaWindow.mm, line 235</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NameValuePairList::const_iterator param_useNSView_pair(NULL);</code>
+to:</p>
+</li>
+<li>
+<p><code>NameValuePairList::const_iterator param_useNSView_pair;</code></p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Change OgreOSXCocoaWindow.mm, line 121</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NameValuePairList::const_iterator opt(NULL);</code>
+to:</p>
+</li>
+<li>
+<p><code>NameValuePairList::const_iterator opt;</code></p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="build_libraries_which_depend_on_ogre"><a class="anchor" href="#build_libraries_which_depend_on_ogre"></a>2.2. Build libraries which depend on Ogre</h3>
+<div class="sect3">
+<h4 id="pagedgeometrybuilder"><a class="anchor" href="#pagedgeometrybuilder"></a>2.2.1. PagedGeometryBuilder</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Paged geometry (large landscape) library for Ogre</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="caelumbuilder"><a class="anchor" href="#caelumbuilder"></a>2.2.2. CaelumBuilder</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: Sky, sun, weather library for Ogre</p>
+</li>
+<li>
+<p>Version: 0.6.1 (zip file, not gz)</p>
+</li>
+<li>
+<p>Source: <a href="https://caelum.googlecode.com/files/caelum-0.6.1.zip" class="bare">https://caelum.googlecode.com/files/caelum-0.6.1.zip</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="myguibuilder"><a class="anchor" href="#myguibuilder"></a>2.2.3. MyGUIBuilder</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Description: GUI library for Ogre</p>
+</li>
+<li>
+<p>Version: 3.2.0</p>
+</li>
+<li>
+<p>Source: <a href="http://downloads.sourceforge.net/project/my-gui/MyGUI/MyGUI_3.2.0/MyGUI_3.2.0.zip" class="bare">http://downloads.sourceforge.net/project/my-gui/MyGUI/MyGUI_3.2.0/MyGUI_3.2.0.zip</a></p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="build_steps"><a class="anchor" href="#build_steps"></a>Build steps</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">unzip MyGUI_3.2.0.zip
+mv MyGUI_3.2.0 MyGUI
+mkdir MyGUI/build
+cd MyGUI/build
+cmake ../. -DOgre_INCLUDE_DIR=&lt;rorbuild_root_dir&gt;/include/osx_10.9/Ogre -DOgre_LIBRARIES="debug;OgreMain_d;optimized;OgreMain" -DOgre_LIB_DIR=&lt;rorbuild_root_dir&gt;/lib/osx_10.9/Ogre/Release</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Dependencies must be in <code>&lt;source-directory&gt;/dependencies</code>. (same directory as <code>CMakeDependenciesConfig.txt</code>)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="copying_ogre_and_using_the_dynamic_library"><a class="anchor" href="#copying_ogre_and_using_the_dynamic_library"></a>2.3. Copying Ogre and using the dynamic library</h3>
+<div class="paragraph">
+<p>Download Ogre 1.8.0 SDK for OS X.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">cp /Volumes/OgreSDK/OgreSDK/include/Ogre &lt;ror_dependencies_dir&gt;/include/osx_10.9/Ogre
+cp /Volumes/OgreSDK/OgreSDK/include/OIS &lt;ror_dependencies_dir&gt;/include/osx_10.9/OIS
+cp /Volumes/OgreSDK/OgreSDK/lib/*.dylib &lt;ror_dependencies_dir&gt;/lib/osx_10.9/Ogre/Release/
+cp -R /Volumes/OgreSDK/OgreSDK/lib/pkgconfig &lt;ror_dependencies_dir&gt;/lib/osx_10.9/Ogre/Release/
+cp -R /Volumes/OgreSDK/OgreSDK/lib/release &lt;ror_dependencies_dir&gt;/lib/osx_10.9/Ogre/Release/
+cp /Volumes/OgreSDK/OgreSDK/lib/release/libOIS.a &lt;ror_dependencies_dir&gt;/lib/osx_10.9/OIS/Release/
+cp -R /Volumes/OgreSDK/OgreSDK/boost/boost &lt;ror_dependencies_dir&gt;/include/osx_10.9/
+mv &lt;ror_dependencies_dir&gt;/include/osx_10.9/boost &lt;ror_dependencies_dir&gt;/include/osx_10.9/Boost/
+cp -R /Volumes/OgreSDK/OgreSDK/boost/lib/*.a &lt;ror_dependencies_dir&gt;/lib/osx_10.9/Boost/Release/</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="build_ror"><a class="anchor" href="#build_ror"></a>3. Build RoR</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="gather_up_compiled_libraries_into_a_directory_structure_for_cmake"><a class="anchor" href="#gather_up_compiled_libraries_into_a_directory_structure_for_cmake"></a>3.1. Gather up compiled libraries into a directory structure for CMake</h3>
+
+</div>
+<div class="sect2">
+<h3 id="download_ror_source"><a class="anchor" href="#download_ror_source"></a>3.2. Download RoR source</h3>
+
+</div>
+<div class="sect2">
+<h3 id="configure_cmake"><a class="anchor" href="#configure_cmake"></a>3.3. Configure CMake</h3>
+<div class="paragraph">
+<p>Packages not found so far:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>OGRE</p>
+</li>
+<li>
+<p>OGRE-Terrain</p>
+</li>
+<li>
+<p>OGRE-Paging</p>
+</li>
+<li>
+<p>OGRE-RTShaderSystem</p>
+</li>
+<li>
+<p>OIS&#8230;&#8203; finds version 1.3, presumably in system?</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="other_docs"><a class="anchor" href="#other_docs"></a>4. Other docs</h2>
+<div class="sectionbody">
+
+</div>
+</div>
+<div class="sect1">
+<h2 id="build_notes"><a class="anchor" href="#build_notes"></a>5. Build notes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Make a directory named <code>tmp</code> in the root path of the RoR build directory. (Alongside this file.)
+Build in sequential order:</p>
+</div>
+<div class="sect2">
+<h3 id="wxwidgets_2"><a class="anchor" href="#wxwidgets_2"></a>5.1. WxWidgets</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>TODO</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ogre_dependencies"><a class="anchor" href="#ogre_dependencies"></a>5.2. Ogre dependencies</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Go here: <a href="http://www.ogre3d.org/download/source" class="bare">http://www.ogre3d.org/download/source</a></p>
+</li>
+<li>
+<p>Download Ogre 1.8.1 Source for Linux/OSX (88.6MB)</p>
+</li>
+<li>
+<p>cd to RoR master directory, then</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>hg clone https://bitbucket.org/cabalistic/ogredeps`
+cd ogredeps`
+cmake .
+make
+sudo make install</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ogre_2"><a class="anchor" href="#ogre_2"></a>5.3. Ogre</h3>
+<div class="paragraph">
+<p><a href="http://downloads.sourceforge.net/project/ogre/ogre-dependencies-mac/1.8/Ogre_Xcode4_Templates_20130325.pkg.zip">Get Xcode 4 templates here</a></p>
+</div>
+<div class="paragraph">
+<p>Install Command Line Tools (Mavericks) for Xcode
+	<a href="https://developer.apple.com/downloads/index.action" class="bare">https://developer.apple.com/downloads/index.action</a></p>
+</div>
+<div class="paragraph">
+<p>Download Cg (v3.1, Cg is legacy, last checked 2014-04):
+<a href="http://developer.download.nvidia.com/cg/Cg_3.1/Cg-3.1_April2012.dmg" class="bare">http://developer.download.nvidia.com/cg/Cg_3.1/Cg-3.1_April2012.dmg</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">cmake -D BOOST_ROOT=&lt;ror-dependencies-dir&gt;/src/Boost/boost -D BOOST_LIBRARYDIR=&lt;rorbuild_root_dir&gt;/libs/x86/Boost -D Boost_DEBUG=1 -D OGRE_DEPENDENCIES_DIR=&lt;rorbuild_root_dir&gt;/src/files/ogredeps/build/src -D OGRE_STATIC=1 -D CMAKE_OSX_ARCHITECTURES=i386 -D OGRE_BUILD_SAMPLES=0 -G Xcode ../Ogre</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>open OGRE.xcodeproj</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ois_2"><a class="anchor" href="#ois_2"></a>5.4. OIS</h3>
+<div class="paragraph">
+<p>OIS 1.3 needs to be patched to compile on OS X 10.9. It references Carbon, which
+is deprecated. The following patch makes it work (no joystick/gamepad support):
+<a href="http://sourceforge.net/p/wgois/patches/35/" class="bare">http://sourceforge.net/p/wgois/patches/35/</a></p>
+</div>
+<div class="paragraph">
+<p>Diff file itself: <a href="http://sourceforge.net/p/wgois/patches/_discuss/thread/3aad1ad2/6d46/attachment/cocoa.diff" class="bare">http://sourceforge.net/p/wgois/patches/_discuss/thread/3aad1ad2/6d46/attachment/cocoa.diff</a></p>
+</div>
+<div class="paragraph">
+<p>There seem to be two versions of the <code>ois-v1-3.tar.gz</code> file. One has a reference to Xcode 2.4; the other has a reference to Xcode 3.0. If the wrong version is used, cocoa.diff will fail to patch chunk #1. This does not stop it from compiling, but we should distribute a copy of the OIS source (zlib license; OK as long as it isn&#8217;t modified) with the appropriate cocoa.diff file.</p>
+</div>
+<div class="paragraph">
+<p>cd to tmp directory, then:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">wget http://sourceforge.net/p/wgois/patches/_discuss/thread/3aad1ad2/6d46/attachment/cocoa.diff
+wget http://downloads.sourceforge.net/project/wgois/Source%20Release/1.3/ois_v1-3.tar.gz
+tar -xvf ois-v1-3.tar.gz
+cp cocoa.diff ois-v1-3/
+cd ois-v1-3/
+patch -p0 &lt; cocoa.diff</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Copy over the new Xcode project; this is setup for OS X 10.9&#8217;s compiler.</p>
+</div>
+<div class="paragraph">
+<p><code>xcodebuild -target OIS -target OISdylib -target OISstatic</code></p>
+</div>
+<div class="paragraph">
+<p>MD5 hashes:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Mac/XCode-2.2/OIS.xcodeproj/project.pbxproj
+  * unpatched v2.4		:	67cc905a253bd62b811fbe61a13757fd
+  * patched	v2.4		:	da1050e4f55abef93a341eefac470031
+includes/mac/MacMouse.h
+  * unpatched			:	ba394be60522be0396d496012a7106da
+  * patched			:	ba394be60522be0396d496012a7106da
+includes/mac/CocoaMouse.h
+  * unpatched			:
+  * patched			:	9a9e52d0b7fd667383175ee30482be41
+includes/mac/CocoaInputManager.h
+  * unpatched			:
+  * patched			:	9c5dabefcd0aeb8d9c3311c7f10c15fb
+includes/mac/MacHIDManager.h
+  * unpatched			:
+  * patched			:	0e457b701a4588a8cf64d1621b5115ea
+includes/mac/MacKeyboard.h
+  * unpatched			:
+  * patched			:	768fa8613a08378e27a2179609ba8591
+includes/mac/MacHelpers.h
+  * unpatched			:
+  * patched			:	afc98e9bebcbf474d9a0ad5788df32c1
+includes/mac/CocoaJoyStick.h
+  * unpatched			:
+  * patched			:	458db382d99a281d530daed1706eb541
+includes/mac/CocoaKeyboard.h
+  * unpatched			:
+  * patched			:	6c17cee71a85f22442938a849ed786ee
+includes/mac/CocoaHelpers.h
+  * unpatched			:
+  * patched			:	a8a5839d28332779c605164b7951f105
+demos/OISConsole.cpp
+  * unpatched			:
+  * patched			:	5f43a6c8dc2eba201f94b4e9f0782a32
+src/mac/MacHIDManager.cpp
+  * unpatched			:
+  * patched			:	e28b6e083279db6752ff7e4e5ae48e29
+src/mac/MacKeyboard.cpp
+  * unpatched			:
+  * patched			:	ee0e37c2c86751a5f7e932c7bf86790e
+src/mac/MacHelpers.cpp
+  * unpatched			:
+  * patched			:	dd7e4f453366a5c9dfdac3d8fff02a62
+src/mac/CocoaMouse.mm
+  * unpatched			:
+  * patched			:	afd3b71a1649d4ca3935564eaea214c0
+src/mac/CocoaInputManager.mm
+  * unpatched			:
+  * patched			:	1ad299cc3fc93d54c7adfd485ebf9706
+src/mac/MacMouse.cpp
+  * unpatched			:
+  * patched			:	e36622c5e8dc65233cd3ae239b0e49f6
+src/mac/MacInputManager.cpp
+  * unpatched			:
+  * patched			:	f5ec147d80e3d8860e237fb820d98aba
+src/mac/CocoaJoyStick.mm
+  * unpatched			:
+  * patched			:	a9284c05588f978e66326f5c38ad5b11
+src/mac/CocoaKeyboard.mm
+  * unpatched			:
+  * patched			:	f1db13e65a6705a07c12a868664ca43c
+src/OISInputManager.cpp
+  * unpatched			:
+  * patched			:	78d78b751aa14873e8659696b9728fac</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="angelscript_2"><a class="anchor" href="#angelscript_2"></a>5.5. AngelScript</h3>
+<div class="paragraph">
+<p>cd to tmp directory, then:
+  * wget <a href="http://www.angelcode.com/angelscript/sdk/files/angelscript_2.28.2.zip" class="bare">http://www.angelcode.com/angelscript/sdk/files/angelscript_2.28.2.zip</a>
+  * unzip angelscript_2.28.2.zip;mv sdk angelscript
+  * mkdir angelscript-release;cd angelscript-release
+  * cmake ../angelscript/angelscript/projects/cmake/.
+  * make</p>
+</div>
+<div class="paragraph">
+<p>Build products	:
+	static lib	:	tmp/angelscript/angelscript/lib/libAngelscript.a
+	executable	:	tmp/angelscript/angelscript/samples/game/bin/game
+				:	(this is a test game; avoid the zombies)</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="cmake_ror_makefile"><a class="anchor" href="#cmake_ror_makefile"></a>6. CMake (RoR makefile)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use CMake to create a Makefile for RoR.</p>
+</div>
+<div class="sect2">
+<h3 id="notes_on_ogre"><a class="anchor" href="#notes_on_ogre"></a>6.1. Notes on Ogre</h3>
+<div class="paragraph">
+<p>Command to run Ogre build over and over in decompressed Ogre directory:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">mkdir build
+cd Ogre/build
+cd ..;rm -rf ./build;mkdir build;cd build;cmake ../.
+
+-- The following external packages were located on your system.
+-- This installation will have the extra features provided by these packages.
++ zlib
++ zziplib
++ freeimage
++ freetype
++ OpenGL
++ OpenGL ES 1.x
++ OpenGL ES 2.x
++ cg
++ boost
++ boost-thread
++ boost-date_time
++ boost-system
++ boost-chrono
++ OIS
++ Doxygen
++ iOS SDK
++ Carbon
++ Cocoa
++ IOKit
++ CoreVideo</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="automated_testing"><a class="anchor" href="#automated_testing"></a>7. Automated testing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Test on clean OS X 10.9.2 install with re-imageable home directory built from a template. Push completed builds to remote Jenkins host.
+Home directory rebuilt every time a build is pushed to the machine.
+Re-imaged nightly, weekly, etc. depending on needs.</p>
+</div>
+<div class="paragraph">
+<p>rorbuild automated build workflow:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ssh in, login via GUI, and scp the files 30 seconds later (hackish, but works) and then trigger them to launch with ssh ("open") command.</p>
+</li>
+<li>
+<p>Modified master OS X home profile, with Xcode and Python "all set up."</p>
+</li>
+<li>
+<p>Upon login, auto-create cached home directory from modified master profile directory template.</p>
+</li>
+<li>
+<p>Slipstreamed copy of latest rorbuild snapshot, for auto-run upon login</p>
+</li>
+<li>
+<p>Python "check-in" script to feed resulting build to Jenkins (running on a VPS)</p>
+</li>
+<li>
+<p>Cleanup code to log out. Home directory is wiped after account logs out.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This runs whenever we push the latest build to the machine.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="jenkins"><a class="anchor" href="#jenkins"></a>8. Jenkins</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create Standard user named <code>rorbuild</code></p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Grant permissions</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Place <code>rorbuild</code> directory somewhere logical, where you and Jenkins can access it. e.g. <code>/Users/Shared/rorbuild</code>.</p>
+</li>
+<li>
+<p>Open <code>Get Info</code> for the rorbuild directory.</p>
+</li>
+<li>
+<p>Click the plus button below the folder list at the bottom. A user list pops up.</p>
+</li>
+<li>
+<p>Click the <code>rorbuild</code> user in the list, then click the <code>Select</code> button.</p>
+</li>
+<li>
+<p>Under <code>Sharing &amp; Permissions</code> at the bottom of the <code>Get Info</code> window for <code>rorbuild</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click the padlock icon at the bottom and authenticate.</p>
+</li>
+<li>
+<p>Change the <code>rorbuild</code> user&#8217;s privilege level from <code>No Access</code> to <code>Read &amp; Write</code></p>
+</li>
+<li>
+<p>Click the gear button &gt; <code>Apply to enclosed items&#8230;&#8203;</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Further configuration</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Jenkins</code> &gt; <code>New Project</code> &gt; <code>Rigs of Rods</code></p>
+</li>
+<li>
+<p><code>Rigs of Rods</code> &gt; <code>Configure</code></p>
+</li>
+<li>
+<p>Build schedule: <code>H * * * *</code></p>
+</li>
+<li>
+<p>Execute shell: see script below</p>
+</li>
+<li>
+<p>Change the path to point to the <code>build_osx.sh</code> script on your system.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>echo RoRBuild | su rorbuild -S cd /Users/Shared/rorbuild/;python build_osx.py</code></p>
+</div>
+<div class="paragraph">
+<p>Hit <code>Save</code>.</p>
+</div>
+</div>
+</div></div></div></div><div class="footer"><div class="row"><div class="small-12 medium-4 columns"><h4>We are open</h4>Rigs of Rods is free and open source, available under the <a href='https://www.gnu.org/Copyleft/' title='Copyleft licensing'>copyleft</a>-style <a href='http://www.gnu.org/licenses/gpl-3.0.html' title='The GPLv3 license'>GPLv3</a> license.</div><div class="small-12 medium-2 columns"><h4>Home</h4><ul><li><a href="/en/download" title="Get the game">Download</a></li><li><a href="/en/blog" title="translation missing: en.nav.blog.tip">Blog</a></li><li><a href="/en/docs" title="translation missing: en.nav.docs.tip">Docs</a></li></ul></div><div class="small-12 medium-2 columns"><h4>Forum</h4><ul><li><a href="http://rigsofrods.com/forum" title="Talk to the community">Index</a></li><li><a href="http://rigsofrods.com/sso" title="Register at the forum">Register</a></li><li><a href="http://rigsofrods.com/search.php" title="Find what you need">Search</a></li></ul></div><div class="small-12 medium-4 columns"><h4>Follow us</h4><ul class="home-social"><li><a class="fa fa-twitter" href="https://twitter.com/rigsofrods"></a><a class="fa fa-facebook" href="https://facebook.com/rigsofrods"></a><a class="fa fa-vk" href="https://vk.com/ror_vk"></a><a class="fa fa-youtube" href="https://youtube.com/OfficialRigsOfRods"></a></li></ul></div></div></div>

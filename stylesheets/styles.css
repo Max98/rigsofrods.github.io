@@ -8488,6 +8488,7 @@ th {
   /* line 70, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
   #toc.toc {
     margin-top: 2.1875rem !important;
+    padding-bottom: 3.28125rem !important;
     background-color: #f8f8f7;
     position: fixed;
     width: 15em;

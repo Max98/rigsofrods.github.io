@@ -13,6 +13,180 @@
 <p>This page documents Truck Description File, the vehicle description format
 of Rigs of Rods game engine.</p>
 </div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#building_philosophy">2. Building Philosophy</a></li>
+<li><a href="#is_it_a_truck_plane_train_or_boat">3. Is It a Truck, Plane, Train or Boat?</a></li>
+<li><a href="#light_cars">4. Light Cars</a></li>
+<li><a href="#documentation_style_guide">5. Documentation style guide</a></li>
+<li><a href="#truck_file_syntax">6. Truck File Syntax</a>
+<ul class="sectlevel2">
+<li><a href="#required_sections">6.1. Required Sections</a>
+<ul class="sectlevel3">
+<li><a href="#title">6.1.1. Title</a></li>
+<li><a href="#globals">6.1.2. Globals</a></li>
+<li><a href="#nodes">6.1.3. Nodes</a></li>
+<li><a href="#nodes2">6.1.4. Nodes2</a></li>
+<li><a href="#beams">6.1.5. Beams</a></li>
+<li><a href="#cameras">6.1.6. Cameras</a></li>
+<li><a href="#cinecam">6.1.7. Cinecam</a></li>
+<li><a href="#end">6.1.8. End</a></li>
+</ul>
+</li>
+<li><a href="#organizational_sections">6.2. Organizational Sections</a>
+<ul class="sectlevel3">
+<li><a href="#guid">6.2.1. GUID</a></li>
+<li><a href="#fileformatversion">6.2.2. Fileformatversion</a></li>
+<li><a href="#author">6.2.3. Author</a></li>
+<li><a href="#description">6.2.4. Description</a></li>
+<li><a href="#fileinfo">6.2.5. Fileinfo</a></li>
+<li><a href="#help">6.2.6. Help</a></li>
+<li><a href="#comments">6.2.7. Comments</a></li>
+<li><a href="#hideinchooser">6.2.8. hideInChooser</a></li>
+</ul>
+</li>
+<li><a href="#vehicle_specific">6.3. Vehicle-specific</a>
+<ul class="sectlevel3">
+<li><a href="#engine">6.3.1. Engine</a></li>
+<li><a href="#engoption">6.3.2. Engoption</a></li>
+<li><a href="#brakes">6.3.3. Brakes</a></li>
+<li><a href="#antilockbrakes">6.3.4. AntiLockBrakes</a></li>
+<li><a href="#tractioncontrol">6.3.5. TractionControl</a></li>
+<li><a href="#slopebrake">6.3.6. SlopeBrake</a></li>
+<li><a href="#wheels">6.3.7. Wheels</a></li>
+<li><a href="#wheels2">6.3.8. Wheels2</a></li>
+<li><a href="#meshwheels">6.3.9. Meshwheels</a></li>
+<li><a href="#meshwheels2">6.3.10. Meshwheels2</a></li>
+<li><a href="#flexbodywheels">6.3.11. Flexbodywheels</a></li>
+<li><a href="#shocks">6.3.12. Shocks</a></li>
+<li><a href="#shocks2">6.3.13. Shocks2</a></li>
+<li><a href="#hydros">6.3.14. Hydros</a></li>
+<li><a href="#animators">6.3.15. Animators</a></li>
+</ul>
+</li>
+<li><a href="#behavior">6.4. Behavior</a>
+<ul class="sectlevel3">
+<li><a href="#commands">6.4.1. Commands</a></li>
+<li><a href="#commands2">6.4.2. Commands2</a></li>
+<li><a href="#set_inertia_defaults">6.4.3. Set_inertia_defaults</a></li>
+<li><a href="#rotators">6.4.4. Rotators</a></li>
+<li><a href="#rotators2">6.4.5. Rotators2</a></li>
+<li><a href="#forwardcommands">6.4.6. Forwardcommands</a></li>
+<li><a href="#importcommands">6.4.7. Importcommands</a></li>
+<li><a href="#set_beam_defaults">6.4.8. Set_beam_defaults</a></li>
+<li><a href="#set_beam_defaults_scale">6.4.9. Set_beam_defaults_scale</a></li>
+<li><a href="#set_node_defaults">6.4.10. Set_node_defaults</a></li>
+<li><a href="#enable_advanced_deformation">6.4.11. Enable_advanced_deformation</a></li>
+<li><a href="#rollon">6.4.12. Rollon</a></li>
+<li><a href="#contacters">6.4.13. Contacters</a></li>
+<li><a href="#triggers">6.4.14. Triggers</a></li>
+<li><a href="#lockgroups">6.4.15. Lockgroups</a></li>
+<li><a href="#hooks">6.4.16. Hooks</a></li>
+<li><a href="#slide_nodes">6.4.17. Slide Nodes</a></li>
+<li><a href="#rail_groups">6.4.18. Rail Groups</a></li>
+<li><a href="#detacher_group">6.4.19. Detacher_group</a></li>
+<li><a href="#ropes">6.4.20. Ropes</a></li>
+<li><a href="#fixes">6.4.21. Fixes</a></li>
+<li><a href="#minimass">6.4.22. Minimass</a></li>
+<li><a href="#ties">6.4.23. Ties</a></li>
+<li><a href="#ropables">6.4.24. Ropables</a></li>
+<li><a href="#particles">6.4.25. Particles</a></li>
+<li><a href="#torque_curve">6.4.26. Torque Curve</a>
+<ul class="sectlevel4">
+<li><a href="#usage_1_predefined_curve">Usage #1: Predefined curve</a></li>
+<li><a href="#usage_2_defining_custom_curve">Usage #2: Defining custom curve</a></li>
+</ul>
+</li>
+<li><a href="#cruise_control">6.4.27. Cruise Control</a></li>
+<li><a href="#speedlimiter">6.4.28. Speedlimiter</a></li>
+<li><a href="#axles">6.4.29. Axles</a></li>
+<li><a href="#collisionboxes">6.4.30. Collisionboxes</a></li>
+<li><a href="#rescuer">6.4.31. Rescuer</a></li>
+</ul>
+</li>
+<li><a href="#look_feel">6.5. Look &amp; Feel</a>
+<ul class="sectlevel3">
+<li><a href="#managedmaterials">6.5.1. Managedmaterials</a></li>
+<li><a href="#set_managedmaterials_options">6.5.2. Set_managedmaterials_options</a></li>
+<li><a href="#flares">6.5.3. Flares</a></li>
+<li><a href="#flares2">6.5.4. Flares2</a></li>
+<li><a href="#materialflarebindings">6.5.5. Materialflarebindings</a></li>
+<li><a href="#props">6.5.6. Props</a>
+<ul class="sectlevel4">
+<li><a href="#special_props">Special Props</a></li>
+</ul>
+</li>
+<li><a href="#add_animation">6.5.7. Add_animation</a></li>
+<li><a href="#flexbodies">6.5.8. Flexbodies</a>
+<ul class="sectlevel4">
+<li><a href="#sub_section_prop_like">(sub-section) "Prop-like"</a></li>
+<li><a href="#sub_directive_forset">(sub-directive) forset</a></li>
+<li><a href="#sub_directive_disable_flexbody_shadow">(sub-directive) disable_flexbody_shadow</a></li>
+<li><a href="#sub_directive_flexbody_camera_mode">(sub-directive) flexbody_camera_mode</a></li>
+</ul>
+</li>
+<li><a href="#submesh">6.5.9. Submesh</a>
+<ul class="sectlevel4">
+<li><a href="#sub_section_texcoords">(sub-section) texcoords</a></li>
+<li><a href="#sub_section_cab">(sub-section) cab</a></li>
+<li><a href="#sub_directive_backmesh">(sub-directive) backmesh</a></li>
+</ul>
+</li>
+<li><a href="#submesh_groundmodel">6.5.10. submesh_groundmodel</a></li>
+<li><a href="#exhausts">6.5.11. Exhausts</a></li>
+<li><a href="#sections">6.5.12. Sections</a></li>
+<li><a href="#guisettings">6.5.13. Guisettings</a></li>
+<li><a href="#set_skeleton_settings">6.5.14. Set_skeleton_settings</a></li>
+<li><a href="#videocamera">6.5.15. Videocamera</a></li>
+<li><a href="#extcamera">6.5.16. Extcamera</a></li>
+<li><a href="#camerarail">6.5.17. Camerarail</a></li>
+<li><a href="#envmap">6.5.18. Envmap</a></li>
+</ul>
+</li>
+<li><a href="#sounds">6.6. Sounds</a>
+<ul class="sectlevel3">
+<li><a href="#disabledefaultsounds">6.6.1. disabledefaultsounds</a></li>
+<li><a href="#soundsources">6.6.2. Soundsources</a></li>
+<li><a href="#soundsources2">6.6.3. Soundsources2</a>
+<ul class="sectlevel4">
+<li><a href="#default">Default</a>
+<ul class="sectlevel5">
+<li><a href="#engine_diesel">Engine (Diesel)</a></li>
+<li><a href="#engine_gasoline">Engine (Gasoline)</a></li>
+<li><a href="#airplane_prop">Airplane (Prop)</a></li>
+<li><a href="#airplane_jet">Airplane (Jet)</a></li>
+<li><a href="#airplane_piston">Airplane (Piston)</a></li>
+<li><a href="#marine_large">Marine (Large)</a></li>
+<li><a href="#marine_small">Marine (Small)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#soundsources3">6.6.4. Soundsources3</a></li>
+</ul>
+</li>
+<li><a href="#aircraft">6.7. Aircraft</a>
+<ul class="sectlevel3">
+<li><a href="#wings">6.7.1. Wings</a></li>
+<li><a href="#airbrakes">6.7.2. Airbrakes</a></li>
+<li><a href="#turboprops">6.7.3. Turboprops</a></li>
+<li><a href="#fusedrag">6.7.4. Fusedrag</a></li>
+<li><a href="#turbojets">6.7.5. Turbojets</a></li>
+<li><a href="#pistonprops">6.7.6. Pistonprops</a></li>
+</ul>
+</li>
+<li><a href="#boats">6.8. Boats</a>
+<ul class="sectlevel3">
+<li><a href="#screwprops">6.8.1. Screwprops</a></li>
+</ul>
+</li>
+<li><a href="#undocumented">6.9. Undocumented</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">

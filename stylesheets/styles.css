@@ -8541,7 +8541,7 @@ th {
 
   /* line 77, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
   #toc.toc {
-    width: 40vh; }
+    width: 50vh; }
 
   /* line 78, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
   #toc.toc #toctitle {
@@ -8817,28 +8817,32 @@ h5, h6 {
   font-family: "Open Sans";
   font-weight: 500; }
 
-/* line 334, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 335, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 .bloglist h1 {
-  font-size: 2.25em;
+  font-size: 2.4em;
   border-bottom: 1px solid #ddddd8; }
 
-/* line 335, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 336, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 .bloglist h2 {
-  font-size: 1.75em; }
+  font-size: 1.8em; }
+
+/* line 337, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+#summary > * > h2 {
+  font-size: 1.44em; }
 
 /* Customizations */
-/* line 338, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 340, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header > h1:first-child {
   margin-top: 2.25rem;
   margin-bottom: 0; }
 
-/* line 339, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 341, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header > h1:first-child + #toc {
   margin-top: 8px;
   border-top: 1px solid #ddddd8; }
 
 /*#header h1 {border-top: 1px solid #ddddd8;}*/
-/* line 341, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 343, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details {
   border-bottom: 1px solid #ddddd8;
   line-height: 1.45;
@@ -8848,26 +8852,26 @@ h5, h6 {
   display: flex;
   flex-flow: row wrap; }
 
-/* line 342, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 344, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details span:first-child {
   margin-left: -.125em; }
 
-/* line 343, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 345, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details br {
   display: none; }
 
-/* line 344, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 346, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details br + span:before {
   content: "\00a0\2013\00a0"; }
 
-/* line 345, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 347, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details br + span.author:before {
   content: "\00a0\22c5\00a0"; }
 
-/* line 346, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 348, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #header .details br + span#revremark:before {
   content: "\00a0|\00a0"; }
 
-/* line 348, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
+/* line 350, /run/media/artem/2c09d552-aa38-42cd-9713-7acbd5217f6a/coding/rigsofrods.github.io/source/stylesheets/styles.scss */
 #content {
   margin-top: 1.25em; }

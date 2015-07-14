@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="no-js" lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><title>Test Build 3 released! - Rigs of Rods</title><link href="/stylesheets/styles.css" rel="stylesheet" /><link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CUbuntu+Mono:400%7CUbuntu:300,300italic,300bold,400,400italic,400bold,600,600italic,600bold" rel="stylesheet" /><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.5/jquery.smooth-scroll.min.js"></script><script>$(document).foundation();</script><script>$(document).ready(function() {
+<!DOCTYPE html><html class="no-js" lang="en"><head><meta charset="utf-8" /><meta content="width=device-width, initial-scale=1.0" name="viewport" /><title>Выпущена тестовая сборка 3! - Rigs of Rods</title><link href="/stylesheets/styles.css" rel="stylesheet" /><link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" /><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CUbuntu+Mono:400%7CUbuntu:300,300italic,300bold,400,400italic,400bold,600,600italic,600bold" rel="stylesheet" /><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/foundation/5.5.2/js/foundation.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/jquery-smooth-scroll/1.5.5/jquery.smooth-scroll.min.js"></script><script>$(document).foundation();</script><script>$(document).ready(function() {
     $('a').smoothScroll();
           $('').click(function(event) {
             event.preventDefault();
@@ -7,8 +7,8 @@
               scrollTarget: link.hash
             });
           });
-        });</script></head><body><div class="row contain-to-grid main-header"><div class="small-9 small-centered columns"><div class="fixed main-header"><nav class="top-bar" role="navigation"><ul class="title-area"><li class="name"><h1><a href="/en/">Rigs of Rods</a></h1></li></ul><section class="top-bar-section"><ul class="left"><li><a href="/en/"><span class='fa fa-home'></span>  <span>Home</span></a></li><li><a href="/en/download/"><span class='fa fa-download'></span>  <span>Download</span></a></li><li><a href="/en/repository/"><span class='fa fa-plus'></span>  <span>Repository</span></a></li><li><a href="/en/forum/"><span class='fa fa-comments'></span>  <span>Forum</span></a></li><li><a href="/en/blog/"><span class='fa fa-pencil'></span>  <span>Blog</span></a></li><li><a href="/en/docs/"><span class='fa fa-lightbulb-o'></span>  <span>Docs</span></a></li><li><a href="/en/races/"><span class='fa fa-users'></span>  <span>Multiplayer</span></a></li></ul></section></nav></div></div></div></body></html><div class="row main-start"><div class="small-12 columns"><div id="header"><h1>Test Build 3 released!</h1><div class="details"></div></div><div id="content"><div class="paragraph">
-<p>Say hello to the new test build! Changelog:</p>
+        });</script></head><body><div class="row contain-to-grid main-header"><div class="small-9 small-centered columns"><div class="fixed main-header"><nav class="top-bar" role="navigation"><ul class="title-area"><li class="name"><h1><a href="/en/">Rigs of Rods</a></h1></li></ul><section class="top-bar-section"><ul class="left"><li><a href="/en/"><span class='fa fa-home'></span>  <span>Home</span></a></li><li><a href="/en/download/"><span class='fa fa-download'></span>  <span>Download</span></a></li><li><a href="/en/repository/"><span class='fa fa-plus'></span>  <span>Repository</span></a></li><li><a href="/en/forum/"><span class='fa fa-comments'></span>  <span>Forum</span></a></li><li><a href="/en/blog/"><span class='fa fa-pencil'></span>  <span>Blog</span></a></li><li><a href="/en/docs/"><span class='fa fa-lightbulb-o'></span>  <span>Docs</span></a></li><li><a href="/en/races/"><span class='fa fa-users'></span>  <span>Multiplayer</span></a></li></ul></section></nav></div></div></div></body></html><div class="row main-start"><div class="small-12 columns"><div id="header"><h1>Выпущена тестовая сборка 3!</h1><div class="details"></div></div><div id="content"><div class="paragraph">
+<p>Готова новая сборка! Список изменений:</p>
 </div>
 <div class="dlist">
 <dl>
@@ -17,36 +17,31 @@
 <div class="ulist">
 <ul>
 <li>
-<p>fixed 0.4.0.7&#8217;s malformed flexbodies bug. Flexbodies were spawned deformed,
-see screenshots in
-<a href="https://github.com/RigsOfRods/rigs-of-rods/issues/16">this ticket</a>. I
-fixed it by simply backporting flexbody code from 0.38.67 (last stable
-release). However, I&#8217;m a little worried about performance impact, the code
-uses precise but expensive calculations.</p>
+<p>Исправлена генерация гибких узлов, сломанная в 0.4.0.7. Гибкие узлы
+появлялись деформированными
+(см.
+<a href="https://github.com/RigsOfRods/rigs-of-rods/issues/16">#16</a>). Восстановлено за
+счёт портирования кода из последнего релиза (0.38.67).</p>
 </li>
 <li>
-<p>Added built-in profiler. I incorporated
-<a href="https://floodyberry.wordpress.com/2009/10/07/high-performance-cplusplus-profiling/">this
-library</a> into RoR. It works by putting tracking macros in the code (so
-called instrumentation) and generates a very nice HTML output. I&#8217;ve added
-instrumentation for RigSpawner class (per-function) and FlexBody generation
-(constructor, detailed). Profiling configuration is found in header
-RigLoadingProfilerControl.h. Feel free to add your own instrumentation and
-control headers.</p>
+<p>Добавлен встроенный профайлер. Для этого была использована
+<a href="https://floodyberry.wordpress.com/2009/10/07/high-performance-cplusplus-profiling">данная
+библиотека</a> Она включает отслеживающие макросы в код (т.н. инструментарий) и
+даёт опрятный HTML-вывод. Инструментарий доступен для класса RigSpawner (в
+каждой функции) и генерацию гибких узлов (конструктор, детально). Настройки
+профилирования находятся в заголовке RigLoadingProfilerControl.h.</p>
 </li>
 <li>
-<p>Added ror.cfg option to disable flexbody LODs By profiling, I discovered
-that the slowest part of vehicle loading are flexbodies, but not their
-generation, but seeking flexbody-LOD files in OGRE&#8217;s resource system (mega
-slow, scheduled for elimination by OGRE team). I added a ror.cfg option to
-disable this.</p>
+<p>Отключение LOD-файлов для гибких узлов через опцию в ror.cfg. Профайлер
+подтвердил, что самая медленное при загрузке ТС - гибкие узлы, а именно
+поиск LOD-файлов в системе ресурсов OGRE (очень медленно, будет удалено
+разработчиками OGRE).</p>
 </li>
 <li>
-<p>Added flexbody cache support After disabling the flexbody LODs, the slowest
-part of rig loading was flexbody generation. To speed things up, I
-implemented a caching support for flexbodies - first time the vehicle is
-loaded, a file "flexbodies_mod_MODNUMBER.dat" is generated in cache, and
-subsequent spawns of the same vehicle load it.</p>
+<p>Поддержка кэширования гибких узлов. Следующий тормоз при загрузке ТС -
+генерация гибких узлов. Теперь при первой загрузке ТС создаётся файл
+"flexbodies_mod_MODNUMBER.dat", используемый при загрузке того же ТС в
+дальнейшем.</p>
 </li>
 </ul>
 </div>
@@ -54,13 +49,12 @@ subsequent spawns of the same vehicle load it.</p>
 </dl>
 </div>
 <div class="paragraph">
-<p>Other than that:</p>
+<p>Кроме того:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>I have improved flexbodies calculation, they are faster, even faster than
-0.4.0.7:</p>
+<p>Ускорен обсчёт гибких узлов:</p>
 </li>
 </ul>
 </div>
@@ -77,10 +71,10 @@ subsequent spawns of the same vehicle load it.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>RoRConfig is also updated to support 0.4.5.0&#8217;s features. (like Skidmarks)</p>
+<p>RoRConfig теперь поддерживает все возможности 0.4.5.0.</p>
 </li>
 <li>
-<p>PSSM shadows are included in this release but they are badly glitched.</p>
+<p>Альфа-версия PSSM-теней, баги прилагаются.</p>
 </li>
 </ul>
 </div>
@@ -90,16 +84,16 @@ subsequent spawns of the same vehicle load it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We hope you can enjoy this and help us improve RoR!</p>
+<p>Надеемся что вам понравится и на вашу помощь в тестировании и разработке!</p>
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1">Download Test Build 3 from</dt>
+<dt class="hdlist1">Скачать тестовую сборку</dt>
 <dd>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://yadi.sk/d/EwlR835egzbnM">Yandex.Disk</a></p>
+<p><a href="https://yadi.sk/d/EwlR835egzbnM">Яндекс.Диск</a></p>
 </li>
 <li>
 <p><a href="http://www.mediafire.com/download/lxuxtl6szx9t6b7/Rigs+of+rods+0.4.5.0-dev+Test+Build+3.zip">MediaFire</a></p>
